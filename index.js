@@ -7,8 +7,18 @@ module.exports = app => {
   app.log('Yay, the app was loaded!')
 
   app.on('issues.closed', async context => {
-    const labelUpdate = context.issue({ labels: ['enhancement']})
+    const labelUpdate = context.issue({ labels: ['complete']})
     return context.github.issues.replaceLabels(labelUpdate)
+  })
+
+  app.on('pull_request.opened', async context => {
+    const asdf = context.issue({ body: '담당자의 리뷰를 기다려주세요'})
+    return context.github.issues.createComment(asdf)
+  })
+
+  app.on('pull_request.opened', async context => {
+    const a = context.issue({ labels: ['bug']})
+    return context.github.issues.addLabels(a)
   })
 
 
